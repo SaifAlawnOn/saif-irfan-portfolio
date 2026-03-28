@@ -1,0 +1,964 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  scroll-behavior: smooth;
+}
+
+body {
+  min-height: 100vh;
+  background: radial-gradient(circle at top left, #111827 0, #020617 40%, #000 100%);
+  color: #e5e7eb;
+  font-family: "Space Grotesk", system-ui, -apple-system, BlinkMacSystemFont,
+    "Segoe UI", sans-serif;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  position: relative;
+  overflow-x: hidden;
+}
+
+.bg-grid {
+  position: fixed;
+  inset: 0;
+  background-image: linear-gradient(
+      rgba(15, 23, 42, 0.7) 1px,
+      transparent 1px
+    ),
+    linear-gradient(90deg, rgba(15, 23, 42, 0.7) 1px, transparent 1px);
+  background-size: 32px 32px;
+  opacity: 0.35;
+  pointer-events: none;
+  z-index: -2;
+}
+
+.noise-overlay {
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 160 160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.16'/%3E%3C/svg%3E");
+  mix-blend-mode: soft-light;
+  pointer-events: none;
+  z-index: -1;
+}
+
+::selection {
+  background: rgba(56, 189, 248, 0.4);
+  color: #e5e7eb;
+}
+
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  backdrop-filter: blur(26px);
+  background: linear-gradient(
+      to bottom,
+      rgba(15, 23, 42, 0.9),
+      rgba(15, 23, 42, 0.75),
+      transparent
+    );
+  border-bottom: 1px solid rgba(56, 189, 248, 0.18);
+}
+
+.header-inner {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 1.1rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+}
+
+.logo-lockup {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco,
+    Consolas, "Liberation Mono", "Courier New", monospace;
+  font-size: 0.8rem;
+  text-transform: lowercase;
+  letter-spacing: 0.12em;
+  color: #a5f3fc;
+}
+
+.logo-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 999px;
+  background: radial-gradient(circle at 30% 20%, #22c55e, #0f766e);
+  box-shadow: 0 0 12px rgba(34, 197, 94, 0.8),
+    0 0 32px rgba(45, 212, 191, 0.6);
+}
+
+.top-nav {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.nav-link {
+  position: relative;
+  border: 0;
+  background: rgba(15, 23, 42, 0.65);
+  color: #9ca3af;
+  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco,
+    Consolas, "Liberation Mono", "Courier New", monospace;
+  font-size: 0.75rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  padding: 0.55rem 1rem;
+  border-radius: 999px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  transition: background 180ms ease, color 180ms ease, transform 160ms ease,
+    box-shadow 200ms ease;
+  box-shadow: 0 0 0 1px rgba(148, 163, 184, 0.25);
+}
+
+.nav-link::after {
+  content: "";
+  width: 5px;
+  height: 5px;
+  border-radius: 999px;
+  background: radial-gradient(circle at 30% 20%, #38bdf8, #22c55e);
+  opacity: 0;
+  transform: scale(0.4);
+  transition: opacity 160ms ease, transform 160ms ease;
+}
+
+.nav-link:hover {
+  background: rgba(15, 23, 42, 0.95);
+  color: #e5e7eb;
+  transform: translateY(-1px);
+  box-shadow: 0 16px 40px rgba(15, 23, 42, 0.8),
+    0 0 0 1px rgba(56, 189, 248, 0.3);
+}
+
+.nav-link:hover::after {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.hero {
+  padding: 5.5rem 1.5rem 4rem;
+}
+
+.hero-inner {
+  max-width: 1120px;
+  margin: 0 auto 2.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2.25rem;
+}
+
+.hero-profile {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 2.5rem 3rem;
+  align-items: center;
+}
+
+.hero-avatar-wrap {
+  flex-shrink: 0;
+}
+
+.avatar {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  object-fit: cover;
+  display: block;
+  border: 3px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.35),
+    0 0 0 1px rgba(56, 189, 248, 0.15);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.avatar:hover {
+  transform: scale(1.03);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45),
+    0 0 32px rgba(34, 211, 238, 0.25);
+}
+
+@media (max-width: 1024px) {
+  .avatar {
+    width: 150px;
+    height: 150px;
+  }
+}
+
+.hero-copy {
+  max-width: 640px;
+}
+
+.hero-title {
+  font-size: clamp(2.8rem, 5vw, 3.6rem);
+  line-height: 1.07;
+  letter-spacing: -0.03em;
+  margin: 0 0 1.5rem;
+  color: #f9fafb;
+}
+
+.hero-title.hero-title-name {
+  margin: 0 0 0.65rem;
+}
+
+.hero-subtitle {
+  margin: 0 0 0.85rem;
+  font-size: 1.05rem;
+  font-weight: 500;
+  color: #a5f3fc;
+  letter-spacing: 0.02em;
+}
+
+.hero-tagline-roles {
+  margin: 0 0 1.5rem;
+  color: #9ca3af;
+  font-size: clamp(0.95rem, 2vw, 1.05rem);
+  line-height: 1.55;
+  max-width: 36rem;
+}
+
+.hero-accent {
+  background: linear-gradient(110deg, #22c55e, #22d3ee, #38bdf8);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  text-shadow: 0 0 18px rgba(34, 197, 94, 0.45);
+}
+
+.hero-tagline {
+  margin: 0 0 1.75rem;
+  color: #9ca3af;
+  max-width: 34rem;
+}
+
+.hero-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+
+.hero-pill {
+  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco,
+    Consolas, "Liberation Mono", "Courier New", monospace;
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 0.46rem 0.8rem;
+  border-radius: 999px;
+  border: 1px solid rgba(148, 163, 184, 0.4);
+  color: #d1d5db;
+  background: linear-gradient(
+    135deg,
+    rgba(15, 23, 42, 0.9),
+    rgba(15, 23, 42, 0.5)
+  );
+  box-shadow: 0 0 0 1px rgba(15, 23, 42, 0.9),
+    0 18px 45px rgba(15, 23, 42, 0.95);
+}
+
+.hero-terminal {
+  position: relative;
+  border-radius: 1.5rem;
+  padding: 1.1rem 1.1rem 1rem;
+  background: radial-gradient(circle at 0 0, rgba(94, 234, 212, 0.25), #020617);
+  border: 1px solid rgba(45, 212, 191, 0.4);
+  box-shadow: 0 0 0 1px rgba(15, 23, 42, 0.9),
+    0 28px 80px rgba(6, 182, 212, 0.5);
+  transform-style: preserve-3d;
+  overflow: hidden;
+}
+
+.hero-terminal::before {
+  content: "";
+  position: absolute;
+  inset: -40%;
+  background: radial-gradient(
+    circle at 10% 0,
+    rgba(94, 234, 212, 0.2),
+    transparent 55%
+  );
+  mix-blend-mode: screen;
+  opacity: 0.8;
+}
+
+.terminal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 0.7rem;
+  border-bottom: 1px solid rgba(15, 23, 42, 0.85);
+  position: relative;
+  z-index: 1;
+}
+
+.terminal-status {
+  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco,
+    Consolas, "Liberation Mono", "Courier New", monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(226, 232, 240, 0.9);
+}
+
+.terminal-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 999px;
+  background: #22c55e;
+  box-shadow: 0 0 10px rgba(34, 197, 94, 0.9),
+    0 0 24px rgba(56, 189, 248, 0.75);
+}
+
+.terminal-body {
+  position: relative;
+  z-index: 1;
+  margin-top: 0.85rem;
+  padding: 1rem 1rem 1.1rem;
+  border-radius: 1.1rem;
+  background: radial-gradient(
+      circle at top left,
+      rgba(59, 130, 246, 0.24),
+      transparent 55%
+    ),
+    rgba(15, 23, 42, 0.92);
+  box-shadow: inset 0 0 0 1px rgba(15, 23, 42, 0.9);
+  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco,
+    Consolas, "Liberation Mono", "Courier New", monospace;
+  font-size: 0.82rem;
+  color: rgba(226, 232, 240, 0.9);
+}
+
+.terminal-body p {
+  margin: 0 0 0.35rem;
+}
+
+.prompt {
+  color: #22c55e;
+}
+
+.terminal-faint {
+  color: rgba(148, 163, 184, 0.85);
+}
+
+.terminal-highlight {
+  margin-top: 0.5rem;
+  color: #f97316;
+}
+
+.connect-section {
+  max-width: 1120px;
+  margin: 0 auto 2.25rem;
+  padding: 1.75rem 1.5rem;
+  text-align: center;
+  border-radius: 1.25rem;
+  background: linear-gradient(
+      135deg,
+      rgba(15, 23, 42, 0.75),
+      rgba(15, 23, 42, 0.45)
+    );
+  border: 1px solid rgba(148, 163, 184, 0.28);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(18px);
+}
+
+.connect-heading {
+  margin: 0 0 1.35rem;
+  font-size: clamp(1.15rem, 2.5vw, 1.35rem);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: #f9fafb;
+}
+
+.social-connect {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem 1.5rem;
+}
+
+.social-connect__link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 3.25rem;
+  height: 3.25rem;
+  border-radius: 999px;
+  color: #a5f3fc;
+  background: rgba(15, 23, 42, 0.85);
+  border: 1px solid rgba(148, 163, 184, 0.35);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+  transition: transform 0.3s ease, color 0.2s ease, border-color 0.2s ease,
+    box-shadow 0.3s ease;
+}
+
+.social-connect__link:hover {
+  transform: translateY(-4px);
+  color: #22d3ee;
+  border-color: rgba(56, 189, 248, 0.55);
+  box-shadow: 0 14px 36px rgba(0, 0, 0, 0.45),
+    0 0 28px rgba(34, 211, 238, 0.25);
+}
+
+.social-connect__link:focus-visible {
+  outline: 2px solid #38bdf8;
+  outline-offset: 3px;
+}
+
+.social-connect__icon {
+  width: 1.35rem;
+  height: 1.35rem;
+}
+
+.social-connect__icon--github {
+  width: 1.35rem;
+  height: 1.35rem;
+}
+
+.nav-section {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 0 1.5rem 3.5rem;
+}
+
+.nav-grid {
+  max-width: 1120px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1.25rem;
+}
+
+.nav-card {
+  position: relative;
+  padding: 1.5rem 1.4rem;
+  border-radius: 1.1rem;
+  background: linear-gradient(
+      135deg,
+      rgba(15, 23, 42, 0.98),
+      rgba(15, 23, 42, 0.8)
+    ),
+    rgba(15, 23, 42, 0.9);
+  border: 1px solid rgba(148, 163, 184, 0.35);
+  box-shadow: 0 18px 55px rgba(15, 23, 42, 0.95);
+  cursor: pointer;
+  transition: transform 200ms ease, box-shadow 220ms ease,
+    border-color 180ms ease, background 220ms ease;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.nav-card::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  background: radial-gradient(
+    circle at top left,
+    rgba(56, 189, 248, 0.16),
+    transparent 55%
+  );
+  opacity: 0;
+  transition: opacity 220ms ease;
+  z-index: -1;
+}
+
+.nav-card:hover {
+  transform: translateY(-6px) translateZ(0);
+  box-shadow: 0 30px 80px rgba(15, 23, 42, 0.95),
+    0 0 40px rgba(56, 189, 248, 0.36);
+  border-color: rgba(56, 189, 248, 0.6);
+  background: radial-gradient(
+      circle at top,
+      rgba(37, 99, 235, 0.4),
+      transparent 60%
+    ),
+    rgba(15, 23, 42, 0.98);
+}
+
+.nav-card:hover::before {
+  opacity: 1;
+}
+
+.card-label {
+  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco,
+    Consolas, "Liberation Mono", "Courier New", monospace;
+  font-size: 0.8rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #6b7280;
+}
+
+.nav-card h2 {
+  margin: 0.25rem 0 0.25rem;
+  font-size: 1.2rem;
+  color: #e5e7eb;
+}
+
+.nav-card p {
+  margin: 0 0 0.6rem;
+  color: #9ca3af;
+  font-size: 0.95rem;
+}
+
+.card-cta {
+  margin-top: auto;
+  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco,
+    Consolas, "Liberation Mono", "Courier New", monospace;
+  font-size: 0.75rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #a5f3fc;
+}
+
+.section {
+  padding: 4.5rem 1.5rem 4.75rem;
+}
+
+.section-alt {
+  background: radial-gradient(circle at top, rgba(15, 23, 42, 0.9), #020617);
+}
+
+.section-inner {
+  max-width: 1120px;
+  margin: 0 auto;
+}
+
+.section-header {
+  max-width: 640px;
+  margin-bottom: 2.5rem;
+}
+
+.section-eyebrow {
+  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco,
+    Consolas, "Liberation Mono", "Courier New", monospace;
+  font-size: 0.78rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #6ee7b7;
+  margin: 0 0 0.9rem;
+}
+
+.section-header h2 {
+  margin: 0 0 0.9rem;
+  font-size: clamp(1.8rem, 3vw, 2.2rem);
+  color: #f9fafb;
+  letter-spacing: -0.02em;
+}
+
+.section-lead {
+  margin: 0;
+  color: #9ca3af;
+  max-width: 34rem;
+}
+
+.project-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.25rem;
+}
+
+.project-card {
+  padding: 1.5rem 1.4rem 1.6rem;
+  border-radius: 1.1rem;
+  background: linear-gradient(
+      145deg,
+      rgba(15, 23, 42, 0.96),
+      rgba(15, 23, 42, 0.85)
+    ),
+    rgba(15, 23, 42, 0.9);
+  border: 1px solid rgba(148, 163, 184, 0.45);
+  box-shadow: 0 20px 60px rgba(15, 23, 42, 0.95);
+  transition: transform 200ms ease, box-shadow 220ms ease,
+    border-color 180ms ease;
+}
+
+.project-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(56, 189, 248, 0.6);
+  box-shadow: 0 30px 80px rgba(15, 23, 42, 0.98),
+    0 0 30px rgba(59, 130, 246, 0.32);
+}
+
+.project-meta {
+  display: flex;
+  gap: 0.4rem;
+  margin-bottom: 0.85rem;
+}
+
+.badge {
+  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco,
+    Consolas, "Liberation Mono", "Courier New", monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  padding: 0.26rem 0.6rem;
+  border-radius: 999px;
+  background: rgba(22, 163, 74, 0.22);
+  color: #bbf7d0;
+}
+
+.badge-muted {
+  background: rgba(55, 65, 81, 0.85);
+  color: #e5e7eb;
+}
+
+.project-card h3 {
+  margin: 0 0 0.5rem;
+  font-size: 1.05rem;
+  color: #e5e7eb;
+}
+
+.project-card p {
+  margin: 0 0 0.9rem;
+  color: #9ca3af;
+  font-size: 0.95rem;
+}
+
+.tech-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.tech-list li {
+  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco,
+    Consolas, "Liberation Mono", "Courier New", monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 0.25rem 0.6rem;
+  border-radius: 999px;
+  border: 1px solid rgba(148, 163, 184, 0.45);
+  color: #d1d5db;
+}
+
+.shots-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.25rem;
+}
+
+.shot-card {
+  position: relative;
+  padding: 1.2rem 1.2rem 1.1rem;
+  border-radius: 1.1rem;
+  background: rgba(15, 23, 42, 0.95);
+  border: 1px solid rgba(148, 163, 184, 0.4);
+  box-shadow: 0 18px 50px rgba(15, 23, 42, 1);
+  overflow: hidden;
+}
+
+.shot-frame {
+  position: relative;
+  overflow: hidden;
+  border-radius: 0.9rem;
+  height: 140px;
+  background: radial-gradient(
+      circle at 0 0,
+      rgba(59, 130, 246, 0.7),
+      transparent 55%
+    ),
+    radial-gradient(circle at 100% 100%, rgba(34, 197, 94, 0.8), #020617);
+  box-shadow: inset 0 0 0 1px rgba(15, 23, 42, 0.9);
+}
+
+.shot-frame img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 1;
+}
+
+.shot-frame::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background: linear-gradient(
+    180deg,
+    rgba(2, 6, 23, 0.1) 0%,
+    rgba(2, 6, 23, 0.45) 100%
+  );
+}
+
+.shot-frame-alt {
+  background: radial-gradient(
+      circle at 0 0,
+      rgba(34, 211, 238, 0.65),
+      transparent 55%
+    ),
+    radial-gradient(circle at 100% 100%, rgba(56, 189, 248, 0.9), #020617);
+}
+
+.shot-frame-soft {
+  background: radial-gradient(
+      circle at 0 0,
+      rgba(96, 165, 250, 0.45),
+      transparent 55%
+    ),
+    radial-gradient(circle at 100% 100%, rgba(30, 64, 175, 0.9), #020617);
+}
+
+.shot-caption {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  margin-top: 0.85rem;
+}
+
+.shot-caption span:first-child {
+  color: #e5e7eb;
+  font-size: 0.95rem;
+}
+
+.shot-meta {
+  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco,
+    Consolas, "Liberation Mono", "Courier New", monospace;
+  font-size: 0.72rem;
+  color: #9ca3af;
+}
+
+.section-split {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 1.1fr);
+  gap: 3rem;
+  align-items: flex-start;
+}
+
+.collab-grid {
+  display: grid;
+  gap: 1rem;
+}
+
+.collab-card {
+  padding: 1.4rem 1.4rem 1.3rem;
+  border-radius: 1.1rem;
+  background: linear-gradient(
+    145deg,
+    rgba(15, 23, 42, 0.96),
+    rgba(15, 23, 42, 0.86)
+  );
+  border: 1px solid rgba(148, 163, 184, 0.45);
+  box-shadow: 0 18px 55px rgba(15, 23, 42, 1);
+}
+
+.collab-card h3 {
+  margin: 0 0 0.6rem;
+  color: #e5e7eb;
+}
+
+.collab-card p {
+  margin: 0;
+  color: #9ca3af;
+}
+
+.about-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1.6fr);
+  gap: 3rem;
+  align-items: flex-start;
+}
+
+.about-body {
+  color: #9ca3af;
+  max-width: 38rem;
+}
+
+.about-body p {
+  margin: 0 0 0.9rem;
+}
+
+.contact-section {
+  padding-bottom: 5.5rem;
+}
+
+.contact-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1.2fr);
+  gap: 2.5rem;
+}
+
+.contact-block h3 {
+  margin: 0 0 0.6rem;
+  color: #e5e7eb;
+}
+
+.contact-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #a5f3fc;
+  text-decoration: none;
+  font-size: 0.98rem;
+  padding-bottom: 0.12rem;
+  border-bottom: 1px dotted rgba(56, 189, 248, 0.6);
+}
+
+.contact-link:hover {
+  border-bottom-style: solid;
+}
+
+.contact-note {
+  margin: 0;
+  color: #9ca3af;
+}
+
+.site-footer {
+  border-top: 1px solid rgba(30, 64, 175, 0.9);
+  padding: 1.6rem 1.5rem 2.2rem;
+  background: radial-gradient(circle at top, rgba(15, 23, 42, 0.9), #020617);
+}
+
+.footer-inner {
+  max-width: 1120px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+}
+
+.footer-label {
+  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco,
+    Consolas, "Liberation Mono", "Courier New", monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: #6b7280;
+  margin: 0 0 0.6rem;
+}
+
+.social-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.social-links a {
+  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco,
+    Consolas, "Liberation Mono", "Courier New", monospace;
+  font-size: 0.74rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: #d1d5db;
+  padding: 0.42rem 0.8rem;
+  border-radius: 999px;
+  border: 1px solid rgba(148, 163, 184, 0.45);
+  background: rgba(15, 23, 42, 0.95);
+  transition: background 160ms ease, color 160ms ease, box-shadow 200ms ease,
+    transform 160ms ease;
+}
+
+.social-links a:hover {
+  background: radial-gradient(
+    circle at 0 0,
+    rgba(56, 189, 248, 0.35),
+    rgba(15, 23, 42, 0.98)
+  );
+  color: #f9fafb;
+  box-shadow: 0 14px 40px rgba(15, 23, 42, 1),
+    0 0 28px rgba(56, 189, 248, 0.4);
+  transform: translateY(-2px);
+}
+
+.footer-note {
+  margin: 0;
+  color: #6b7280;
+  max-width: 24rem;
+  font-size: 0.9rem;
+}
+
+@media (max-width: 960px) {
+  .hero-profile {
+    grid-template-columns: 1fr;
+    justify-items: center;
+    text-align: center;
+  }
+
+  .hero-copy {
+    max-width: 100%;
+  }
+
+  .hero-meta {
+    justify-content: center;
+  }
+
+  .hero-terminal {
+    max-width: 100%;
+    margin-top: 0;
+  }
+
+  .nav-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .project-grid,
+  .shots-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .section-split,
+  .about-layout,
+  .contact-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 720px) {
+  .header-inner {
+    padding: 0.9rem 1.1rem;
+  }
+
+  .top-nav {
+    display: none;
+  }
+
+  .hero {
+    padding-top: 3.8rem;
+  }
+
+  .avatar {
+    width: 120px;
+    height: 120px;
+  }
+
+  .connect-section {
+    padding-inline: 1rem;
+  }
+
+  .nav-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .project-grid,
+  .shots-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .section {
+    padding-inline: 1.1rem;
+  }
+}
